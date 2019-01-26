@@ -11,7 +11,9 @@ RIS_TEMPLATE = {
     'ID': None,  # Keywords Plus (WoS generated keywords)
     'PY': None,  # Publication Year
     'PD': None,  # Sort Date
-    'UT': None,  # WoS UID
+    'UT': None,  # WoS UID,
+    'DI': None,  # DOI link
+    'NC': None,  # Number of citations (custom-defined, not part of RIS specification)
 }
 
 def parse_record(rec_data):
@@ -38,7 +40,7 @@ def parse_record(rec_data):
         abstract = full_metadata['abstracts']['abstract']
         abstract_text = abstract['abstract_text']['p']
     except KeyError:
-        abstract = ""
+        abstract_text = ""
     # End try
 
     lang = full_metadata['normalized_languages']['language']['content']
@@ -58,6 +60,8 @@ def parse_record(rec_data):
 
     doi = _extract_doi(dynamic_data['cluster_related']['identifiers']['identifier'])
 
+    nc = dynamic_data['citation_related']['tc_list']['silo_tc']['local_count']
+
     tmp.update({
         'TY': pub_info['pubtype'],
         'AU': authors,  # authors
@@ -72,7 +76,8 @@ def parse_record(rec_data):
         'PY': pub_info['pubyear'],  # Publication Year
         'PD': pub_info['sortdate'],  # Sort Date
         'UT': rec_data['UID'],  # WoS UID
-        'DI': doi,  # DOI or XREF_DOI
+        'DI': doi,  # DOI or XREF_DOI,
+        'NC': nc
     })
 
     return tmp
@@ -83,9 +88,8 @@ def extract_ris(data, ris_entries=None):
         ris_entries = []
 
     # Parse record set and return
-    for idx, rec in enumerate(data['Data']['Records']['records']['REC']):
-        rec_dict = parse_record(rec)
-        ris_entries.append(rec_dict)
+    for rec in data['Records']['records']['REC']:
+        ris_entries.append(parse_record(rec))
     
     return ris_entries
 
@@ -120,14 +124,18 @@ def _extract_manuscript_info(summary):
     return title, pub_src
 
 
-def _extract_doi(identifiers):
+def _extract_doi(identifiers, suitable=['doi', 'xref_doi']):
+
     doi = ""
-    for ids in identifiers:
-        if ids['type'] == 'doi':
-            doi = ids['value']
-            break
-        elif ids['type'] == 'xref_doi':
-            doi = ids['value']
-            break
-        # End if
+    if isinstance(identifiers, dict):
+        if identifiers['type'] in suitable:
+            doi = identifers['value']
+    elif isinstance(identifiers, list):
+        for ids in identifiers:
+            if ids['type'] in suitable:
+                doi = ids['value']
+                break
+        # End for
+    # End if
+
     return doi

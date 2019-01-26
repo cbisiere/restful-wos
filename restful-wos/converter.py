@@ -41,3 +41,13 @@ def to_ris_text(entries):
 
     return out.getvalue()
 # End to_ris_text()
+
+def write_file(text, filename, ext='.txt', overwrite=False):
+    """Write string to text file."""
+    fn = '{}{}'.format(filename, ext)
+    if not os.path.isfile(fn) or overwrite:
+        with open(fn, 'w', encoding='utf-8') as outfile:
+            outfile.write(text)
+            outfile.flush()
+    # End if
+# End write_txt_file()
