@@ -43,7 +43,18 @@ def parse_record(rec_data):
         abstract_text = ""
     # End try
 
-    lang = full_metadata['normalized_languages']['language']['content']
+    lang = full_metadata['normalized_languages']['language']
+    if not hasattr(lang, 'append'):
+        lang = lang['content']
+    else:
+        for desc in lang:
+            if 'primary' in desc['type'].lower():
+                lang = desc['content']
+                break
+        if hasattr(lang, 'append'):
+            lang = 'Unknown'
+        # End if
+    # End if
 
     pubtype = summary['pub_info']['pubtype']
     doctype = summary['doctypes']['doctype']
@@ -88,9 +99,13 @@ def extract_ris(data, ris_entries=None):
         ris_entries = []
 
     # Parse record set and return
+    if 'REC' not in data['Records']['records']:
+        print("No records found!")
+        return ris_entries
+
     for rec in data['Records']['records']['REC']:
         ris_entries.append(parse_record(rec))
-    
+
     return ris_entries
 
 

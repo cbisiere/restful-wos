@@ -1,3 +1,5 @@
+import os
+
 # For compatibility with Py2.7
 try:
     from io import StringIO
@@ -32,7 +34,7 @@ def to_ris_text(entries):
     for ent in entries:
         for k, v in ent.items():
             if isinstance(v, list):
-                v = [i for i in v if i != ', ' and i is not None]
+                v = [str(i) for i in v if i != ', ' and i is not None]
                 v = "\n   ".join(v)
             out.write("{} {}\n".format(k, v))
         # End for
