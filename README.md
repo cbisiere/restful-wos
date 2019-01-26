@@ -21,7 +21,7 @@ Firstly, put your Web of Science access tokens into a yaml file in the following
 ```yaml
 restful_wos:
   wos_lite: YOUR ACCESS TOKEN FOR THE `LITE` API
-  wos_expanded: YOUR ACCESS TOKEN `EXPANDED` API
+  wos_expanded: YOUR ACCESS TOKEN FOR THE `EXPANDED` API
 ```
 
 Then simply pass in the location of the file to the RESTful client:
