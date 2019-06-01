@@ -1,4 +1,3 @@
-from pebble import concurrent
 import requests
 import json
 import yaml
@@ -119,7 +118,6 @@ class RESTClient(object):
         return ris_entries
     # End query()
 
-    @concurrent.process
     def send_query(self, search, url=None):
         if not url:
             url = self.BASE_URL
