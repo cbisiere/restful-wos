@@ -16,6 +16,7 @@ RIS_TEMPLATE = {
     'NC': None,  # Number of citations (custom-defined, not part of RIS specification)
 }
 
+
 def parse_record(rec_data):
     """Parse record data from API request.
 
@@ -94,6 +95,7 @@ def parse_record(rec_data):
     return tmp
 # End parse_record()
 
+
 def extract_ris(data, ris_entries=None):
     if not ris_entries:
         ris_entries = []
@@ -139,12 +141,14 @@ def _extract_manuscript_info(summary):
     return title, pub_src
 
 
-def _extract_doi(identifiers, suitable=['doi', 'xref_doi']):
+def _extract_doi(identifiers, suitable=None):
+    if suitable is None:
+        suitable = ['doi', 'xref_doi']
 
     doi = ""
     if isinstance(identifiers, dict):
         if identifiers['type'] in suitable:
-            doi = identifers['value']
+            doi = identifiers['value']
     elif isinstance(identifiers, list):
         for ids in identifiers:
             if ids['type'] in suitable:
