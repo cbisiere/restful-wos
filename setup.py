@@ -4,8 +4,9 @@ from setuptools import setup
 if __name__ == "__main__":
     setup(
         name='restful-wos',
-        version='0.0.1',
+        version='0.1',
         description='Python package simplifies access to the WoS RESTful API',
+        long_description_content_type="text/markdown",
         long_description=open('README.md').read(),
         url='',
         author='Takuya Iwanaga',
