@@ -11,7 +11,7 @@ if __name__ == "__main__":
         url='',
         author='Takuya Iwanaga',
         author_email='iwanaga.takuya@anu.edu.au',
-        license='(c) 2018 Takuya Iwanaga',
+        license='(c) 2020 Takuya Iwanaga',
         packages=['restful_wos'],
         install_requires=[
             'pyyaml',

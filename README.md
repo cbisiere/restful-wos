@@ -2,11 +2,19 @@
 
 A client for Clarivate Analytics' Web of Science RESTful API.
 
-Currently sends requests and extracts data in RIS format.
+Currently requests and extracts data in RIS format.
 
-## Quickstart:
 
-### Installation
+## Installation
+
+From PyPI via pip
+
+```bash
+$ pip install restful-wos
+```
+
+
+Latest development version:
 
 ```bash
 $ git clone git+https://github.com/ConnectedSystems/restful-wos.git
@@ -14,7 +22,7 @@ $ cd restful-wos
 $ pip install -e .
 ```
 
-### Usage
+## Usage
 
 Firstly, put your Web of Science access tokens into a yaml file in the following format:
 
