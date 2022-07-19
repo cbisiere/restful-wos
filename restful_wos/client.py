@@ -26,7 +26,7 @@ class RESTClient(object):
         # assert isinstance(config, dict), "Give configuration as a dictionary"
 
         with open(config_fn, 'r') as fp:
-            config = yaml.load(fp)['restful_wos']
+            config = yaml.safe_load(fp)['restful_wos']
             self.config = config
 
         if 'wos_expanded' in config:
@@ -68,8 +68,6 @@ class RESTClient(object):
 
         # Get first 100 records
         resp_data = self.send_query(search)
-        resp_data = resp_data.result()
-
         result_info = resp_data['QueryResult']
         num_records = result_info['RecordsFound']
         print("Found {} records, retrieving in batches of 100".format(num_records))
@@ -98,13 +96,7 @@ class RESTClient(object):
                 # End while
             # End pbar
 
-            for i, record in tqdm(enumerate(resp_set), desc='processing'):
-                try:
-                    resp_data = record.result()
-                except Exception as e:
-                    print(e)
-                    raise Exception(e)
-
+            for i, resp_data in tqdm(enumerate(resp_set), desc='processing'):
                 if 'Records' not in resp_data:
                     print("Unexpected return format:")
                     print(resp_data)
@@ -148,7 +140,7 @@ if __name__ == '__main__':
     print("Starting!")
 
     with open('config.yml', 'r') as fp:
-        config = yaml.load(fp)['restful_wos']
+        config = yaml.safe_load(fp)['restful_wos']
 
     client = RESTClient('config.yml')
     resp = client.query('TS=(uncertain* AND (catchment OR watershed OR water))',
