@@ -25,7 +25,7 @@ class RESTClient(object):
         'edition': 'WOS+SCI',
         'firstRecord': 1,
         'count': 100,
-        'sortField': 'PY',
+        'sortField': 'PY+A',
         'optionView': 'FR'
     }
 
