@@ -101,11 +101,20 @@ def extract_ris(data, ris_entries=None):
         ris_entries = []
 
     # Parse record set and return
-    if 'REC' not in data['Records']['records']:
-        print("No records found!")
+    if 'Records' not in data:
+        print("WoS: Unexpected return format:")
+        print(data)
         return ris_entries
 
-    for rec in data['Records']['records']['REC']:
+    if 'records' not in data['Records']:
+        print("WoS: No records found for request: {}".format(i))
+        return ris_entries
+
+    if 'REC' not in data['Records']['records']:
+        print("WoS: No records found!")
+        return ris_entries
+
+    for rec in data['WoS: Records']['records']['REC']:
         ris_entries.append(parse_record(rec))
 
     return ris_entries
