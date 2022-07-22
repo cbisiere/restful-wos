@@ -7,17 +7,10 @@ Currently requests and extracts data in RIS format.
 
 ## Installation
 
-From PyPI via pip
-
-```bash
-$ pip install restful-wos
-```
-
-
 Latest development version:
 
 ```bash
-$ git clone git+https://github.com/ConnectedSystems/restful-wos.git
+$ git clone https://github.com/cbisiere/restful-wos.git
 $ cd restful-wos
 $ pip install -e .
 ```
