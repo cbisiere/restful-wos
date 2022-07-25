@@ -114,7 +114,7 @@ def extract_ris(data, ris_entries=None):
         print("WoS: No records found!")
         return ris_entries
 
-    for rec in data['WoS: Records']['records']['REC']:
+    for rec in data['Records']['records']['REC']:
         ris_entries.append(parse_record(rec))
 
     return ris_entries
