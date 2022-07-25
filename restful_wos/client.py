@@ -22,7 +22,7 @@ class RESTClient(object):
     defaults = {
         'databaseId': 'WOS',
         'lang': 'en',
-        'edition': 'WOS+SCI',
+        'edition': '',
         'firstRecord': 1,
         'count': 100,
         'sortField': 'PY+A',
